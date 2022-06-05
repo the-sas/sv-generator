@@ -34,7 +34,6 @@ public class Send {
         for (int i = 0; i < num; i++) {
             long t = getTimeInSeconds(time);
             double wt = 2*Math.PI*50*t/1000;
-            System.out.println(t);
             APDU apdu = new APDU(appID);
             ASDU asdu = new ASDU(svID, (short) count, new int[]{
                     (int) (meas[0]*1000*Math.sin(wt+Math.toRadians(meas[1]))), qual[0],
@@ -67,7 +66,6 @@ public class Send {
                     .paddingAtBuild(true);
 
             Packet p = etherBuilder.build();
-            System.out.println(p);
             sendHandle.sendPacket(p);
 
             count +=1;

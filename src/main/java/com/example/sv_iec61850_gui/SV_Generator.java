@@ -5,11 +5,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import PacketForm.Send;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class SV_Generator {
     @FXML
@@ -121,7 +123,7 @@ public class SV_Generator {
     @FXML
     private TextField svNumfield;
     @FXML
-    private Text errortext;
+    private ToggleButton togBut;
     int[] qual;
     int[] meas;
     boolean flg;
@@ -130,10 +132,12 @@ public class SV_Generator {
     @FXML
     void initialize() {
         TextField[] data = new TextField[]{SrcMACfield, DstMACfield, svIDfield, appIDfield, svNumfield,
-        RMSIafield, phaseIa, RMSIbfield, phaseIb, RMSIcfield, phaseIc,
-        RMSUafield, phaseUa, RMSUbfield, phaseUb, RMSUcfield, phaseUc};
+                RMSIafield, phaseIa, RMSIbfield, phaseIb, RMSIcfield, phaseIc,
+                RMSUafield, phaseUa, RMSUbfield, phaseUb, RMSUcfield, phaseUc};
 
-        pasteBut.setOnAction(event -> { pasteData(data);});
+        pasteBut.setOnAction(event -> {
+            pasteData(data);
+        });
         GenButt.setOnAction(event -> {
             saveData();
             String[] valid = checkValidity();
@@ -141,20 +145,20 @@ public class SV_Generator {
             qual = change();
             meas = getMeas();
             appID = getAppID();
-            for (int i=0; i< valid.length; i++){
-                if (valid[i]!="") flg = true;
+            for (int i = 0; i < valid.length; i++) {
+                if (valid[i] != "") flg = true;
                 else {
                     flg = false;
-                    i= valid.length;
+                    i = valid.length;
                 }
             }
             try {
                 Send packet = new Send(DstMACfield.getText(),
-                                           SrcMACfield.getText(),
-                                           svIDfield.getText(),
-                                           appID,
-                                           Short.parseShort(svNumfield.getText()),
-                                           meas, qual);
+                        SrcMACfield.getText(),
+                        svIDfield.getText(),
+                        appID,
+                        Short.parseShort(svNumfield.getText()),
+                        meas, qual);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -162,189 +166,188 @@ public class SV_Generator {
         });
     }
 
-    public int[] getMeas(){
-            int[] mes = new int[12];
-            mes[0] = Integer.parseInt(RMSIafield.getText());
-            mes[1] = Integer.parseInt(phaseIa.getText());
-            mes[2] = Integer.parseInt(RMSIbfield.getText());
-            mes[3] = Integer.parseInt(phaseIb.getText());
-            mes[4] = Integer.parseInt(RMSIcfield.getText());
-            mes[5] = Integer.parseInt(phaseIc.getText());
-            mes[6] = Integer.parseInt(RMSUafield.getText());
-            mes[7] = Integer.parseInt(phaseUa.getText());
-            mes[8] = Integer.parseInt(RMSUbfield.getText());
-            mes[9] = Integer.parseInt(phaseUb.getText());
-            mes[10] = Integer.parseInt(RMSUcfield.getText());
-            mes[11] = Integer.parseInt(phaseUc.getText());
-            return mes;
+    public int[] getMeas() {
+        int[] mes = new int[12];
+        mes[0] = Integer.parseInt(RMSIafield.getText());
+        mes[1] = Integer.parseInt(phaseIa.getText());
+        mes[2] = Integer.parseInt(RMSIbfield.getText());
+        mes[3] = Integer.parseInt(phaseIb.getText());
+        mes[4] = Integer.parseInt(RMSIcfield.getText());
+        mes[5] = Integer.parseInt(phaseIc.getText());
+        mes[6] = Integer.parseInt(RMSUafield.getText());
+        mes[7] = Integer.parseInt(phaseUa.getText());
+        mes[8] = Integer.parseInt(RMSUbfield.getText());
+        mes[9] = Integer.parseInt(phaseUb.getText());
+        mes[10] = Integer.parseInt(RMSUcfield.getText());
+        mes[11] = Integer.parseInt(phaseUc.getText());
+        return mes;
+    }
+
+    public int[] change() {
+        int[] q = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+
+        if (Iag.isSelected()) {
+            q[0] = 0;
+        } else if (Iai.isSelected()) {
+            q[0] = 1;
+        } else if (Iau.isSelected()) {
+            q[0] = 10;
+        } else if (Iaq.isSelected()) {
+            q[0] = 11;
         }
-    public int[] change(){
-            int[] q = new int[]{0,0,0,0,0,0,0,0};
 
-            if (Iag.isSelected()) {
-                q[0] = 0;
-            } else if (Iai.isSelected()) {
-                q[0] = 1;
-            } else if (Iau.isSelected()) {
-                q[0] = 10;
-            } else if (Iaq.isSelected()) {
-                q[0] = 11;
-            }
-
-            if (Ibg.isSelected()) {
-                q[1] = 0;
-            } else if (Ibi.isSelected()) {
-                q[1] = 1;
-            } else if (Ibu.isSelected()) {
-                q[1] = 10;
-            } else if (Ibq.isSelected()) {
-                q[1] = 11;
-            }
-
-            if (Icg.isSelected()) {
-                q[2] = 0;
-            } else if (Ici.isSelected()) {
-                q[2] = 1;
-            } else if (Icu.isSelected()) {
-                q[2] = 10;
-            } else if (Icq.isSelected()) {
-                q[2] = 11;
-            }
-
-            if (Ing.isSelected()) {
-                q[3] = 0;
-            } else if (Ini.isSelected()) {
-                q[3] = 1;
-            } else if (Inu.isSelected()) {
-                q[3] = 10;
-            } else if (Inq.isSelected()) {
-                q[3] = 11;
-            }
-
-            if (Uag.isSelected()) {
-                q[4] = 0;
-            } else if (Uai.isSelected()) {
-                q[4] = 1;
-            } else if (Uau.isSelected()) {
-                q[4] = 10;
-            } else if (Uaq.isSelected()) {
-                q[4] = 11;
-            }
-
-            if (Ubg.isSelected()) {
-                q[5] = 0;
-            } else if (Ubi.isSelected()) {
-                q[5] = 1;
-            } else if (Ubu.isSelected()) {
-                q[5] = 10;
-            } else if (Ubq.isSelected()) {
-                q[5] = 11;
-            }
-
-            if (Ucg.isSelected()) {
-                q[6] = 0;
-            } else if (Uci.isSelected()) {
-                q[6] = 1;
-            } else if (Ucu.isSelected()) {
-                q[6] = 10;
-            } else if (Ucq.isSelected()) {
-                q[6] = 11;
-            }
-
-            if (Ung.isSelected()) {
-                q[7] = 0;
-            } else if (Uni.isSelected()) {
-                q[7] = 1;
-            } else if (Unu.isSelected()) {
-                q[7] = 10;
-            } else if (Unq.isSelected()) {
-                q[7] = 11;
-            }
-            return q;
+        if (Ibg.isSelected()) {
+            q[1] = 0;
+        } else if (Ibi.isSelected()) {
+            q[1] = 1;
+        } else if (Ibu.isSelected()) {
+            q[1] = 10;
+        } else if (Ibq.isSelected()) {
+            q[1] = 11;
         }
-    public String[] checkValidity(){
-            String[] errors = new String[17];
-            if (SrcMACfield.getText().length()!=17) {
-                errors[0] = "Invalid source MAC address";
-            }else{
-                if (SrcMACfield.getText().matches("([0-9A-F]{2}:){5}[0-9A-F]{2}")){
-                    errors[0]="";
-                }else errors[0] = "Invalid source MAC adress";
-            }
-            if (DstMACfield.getText().length()!=17){
-                errors[1] = "Invalid destination MAC address";
-            }else{
-                if (DstMACfield.getText().matches("01:0C:CD:04:0[01]:[0-9A-F]{2}")){
-                    errors[1]="";
-                }else errors[1] = "Invalid destination MAC address";
-            }
-            if ((svIDfield.getText().length()==10)&&(svIDfield.getText().matches("[a-zA-Z0-9]{10}"))){
-                errors[2]="";
-            }else errors[2] = "Invalid svID";
 
-            if ((appIDfield.getText().length()==4)&&(appIDfield.getText().matches("[0-9A-F]{4}"))){
-                errors[3]="";
-            }else errors[3] = "Invalid APPID";
+        if (Icg.isSelected()) {
+            q[2] = 0;
+        } else if (Ici.isSelected()) {
+            q[2] = 1;
+        } else if (Icu.isSelected()) {
+            q[2] = 10;
+        } else if (Icq.isSelected()) {
+            q[2] = 11;
+        }
 
-            if(svNumfield.getText().matches("[0-9]}")){
-                errors[4]="";
-            }else errors[4] = "Invalid numbers of SV";
+        if (Ing.isSelected()) {
+            q[3] = 0;
+        } else if (Ini.isSelected()) {
+            q[3] = 1;
+        } else if (Inu.isSelected()) {
+            q[3] = 10;
+        } else if (Inq.isSelected()) {
+            q[3] = 11;
+        }
 
-            if(RMSIafield.getText().matches("[0-9]")){
-                errors[5]="";
-            }else errors[5] = "Invalid value of Ia";
+        if (Uag.isSelected()) {
+            q[4] = 0;
+        } else if (Uai.isSelected()) {
+            q[4] = 1;
+        } else if (Uau.isSelected()) {
+            q[4] = 10;
+        } else if (Uaq.isSelected()) {
+            q[4] = 11;
+        }
 
-            if(RMSIbfield.getText().matches("[0-9]")){
-                errors[6]="";
-            }else errors[6] = "Invalid value of Ib";
+        if (Ubg.isSelected()) {
+            q[5] = 0;
+        } else if (Ubi.isSelected()) {
+            q[5] = 1;
+        } else if (Ubu.isSelected()) {
+            q[5] = 10;
+        } else if (Ubq.isSelected()) {
+            q[5] = 11;
+        }
 
-            if(RMSIcfield.getText().matches("[0-9]")){
-                errors[7]="";
-            }else errors[7] = "Invalid value of Ic";
+        if (Ucg.isSelected()) {
+            q[6] = 0;
+        } else if (Uci.isSelected()) {
+            q[6] = 1;
+        } else if (Ucu.isSelected()) {
+            q[6] = 10;
+        } else if (Ucq.isSelected()) {
+            q[6] = 11;
+        }
 
-            if(RMSUafield.getText().matches("[0-9]")){
-                errors[8]="";
-            }else errors[8] = "Invalid value of Ua";
+        if (Ung.isSelected()) {
+            q[7] = 0;
+        } else if (Uni.isSelected()) {
+            q[7] = 1;
+        } else if (Unu.isSelected()) {
+            q[7] = 10;
+        } else if (Unq.isSelected()) {
+            q[7] = 11;
+        }
+        return q;
+    }
 
-            if(RMSUbfield.getText().matches("[0-9]")){
-                errors[9]="";
-            }else errors[9] = "Invalid value of Ub";
+    public String[] checkValidity() {
+        String[] errors = new String[17];
+        if (SrcMACfield.getText().length() != 17) {
+            errors[0] = "Invalid source MAC address";
+        } else {
+            if (SrcMACfield.getText().matches("([0-9A-F]{2}:){5}[0-9A-F]{2}")) {
+                errors[0] = "";
+            } else errors[0] = "Invalid source MAC adress";
+        }
+        if (DstMACfield.getText().length() != 17) {
+            errors[1] = "Invalid destination MAC address";
+        } else {
+            if (DstMACfield.getText().matches("01:0C:CD:04:0[01]:[0-9A-F]{2}")) {
+                errors[1] = "";
+            } else errors[1] = "Invalid destination MAC address";
+        }
+        if ((svIDfield.getText().length() == 10) && (svIDfield.getText().matches("[a-zA-Z0-9]{10}"))) {
+            errors[2] = "";
+        } else errors[2] = "Invalid svID";
 
-            if(RMSUcfield.getText().matches("[0-9]")){
-                errors[10]="";
-            }else errors[10] = "Invalid value of Uc";
+        if ((appIDfield.getText().length() == 4) && (appIDfield.getText().matches("[0-9A-F]{4}"))) {
+            errors[3] = "";
+        } else errors[3] = "Invalid APPID";
 
-            if(phaseIa.getText().matches("[0-9]")){
-                errors[11]="";
-            }else errors[11] = "Invalid value of PhaseIa";
+        if (svNumfield.getText().matches("[0-9]{1,}")) {
+            errors[4] = "";
+        } else errors[4] = "Invalid numbers of SV";
 
-            if(phaseIb.getText().matches("[0-9]")){
-                errors[12]="";
-            }else errors[12] = "Invalid value of PhaseIb";
+        if (RMSIafield.getText().matches("[0-9]{1,}")) {
+            errors[5] = "";
+        } else errors[5] = "Invalid value of Ia";
 
-            if(phaseIc.getText().matches("[0-9]")){
-                errors[13]="";
-            }else errors[13] = "Invalid value of PhaseIc";
+        if (RMSIbfield.getText().matches("[0-9]{1,}")) {
+            errors[6] = "";
+        } else errors[6] = "Invalid value of Ib";
 
-            if(phaseUa.getText().matches("[0-9]")){
-                errors[14]="";
-            }else errors[14] = "Invalid value of PhaseUa";
+        if (RMSIcfield.getText().matches("[0-9]{1,}")) {
+            errors[7] = "";
+        } else errors[7] = "Invalid value of Ic";
 
-            if(phaseUb.getText().matches("[0-9]")){
-                errors[15]="";
-            }else errors[15] = "Invalid value of PhaseUb";
+        if (RMSUafield.getText().matches("[0-9]{1,}")) {
+            errors[8] = "";
+        } else errors[8] = "Invalid value of Ua";
 
-            if(phaseUc.getText().matches("[0-9]")){
-                errors[16]="";
+        if (RMSUbfield.getText().matches("[0-9]{1,}")) {
+            errors[9] = "";
+        } else errors[9] = "Invalid value of Ub";
+
+        if (RMSUcfield.getText().matches("[0-9]{1,}")) {
+            errors[10] = "";
+        } else errors[10] = "Invalid value of Uc";
+
+        if (phaseIa.getText().matches("-?[0-9]{1,}")) {
+            errors[11] = "";
+        } else errors[11] = "Invalid value of PhaseIa";
+
+        if (phaseIb.getText().matches("-?[0-9]{1,}")) {
+            errors[12] = "";
+        } else errors[12] = "Invalid value of PhaseIb";
+
+        if (phaseIc.getText().matches("-?[0-9]{1,}")) {
+            errors[13] = "";
+        } else errors[13] = "Invalid value of PhaseIc";
+
+        if (phaseUa.getText().matches("-?[0-9]{1,}")) {
+            errors[14] = "";
+        } else errors[14] = "Invalid value of PhaseUa{1,3}";
+
+        if (phaseUb.getText().matches("-?[0-9]{1,}")) {
+            errors[15] = "";
+        } else errors[15] = "Invalid value of PhaseUb";
+
+        if (phaseUc.getText().matches("-?[0-9]{1,}")) {
+            errors[16] = "";
             }else errors[16] = "Invalid value of PhaseUc";
 
-            for (String a: errors) {
-                System.out.println(a);
-            }
             return errors;
         }
 
-        public byte[] getAppID(){
+        public byte[] getAppID () {
             StringBuilder str = new StringBuilder(appIDfield.getText());
             byte[] finb = new byte[2];
             String[] mas = new String[2];
@@ -356,7 +359,7 @@ public class SV_Generator {
             return finb;
         }
 
-        public void saveData(){
+        public void saveData () {
             File file = new File("Data.txt");
             try {
                 if (file.exists()) file.createNewFile();
@@ -383,13 +386,13 @@ public class SV_Generator {
                 throw new RuntimeException(e);
             }
         }
-        public void pasteData(TextField[] data){
+        public void pasteData (TextField[] data){
             BufferedReader br = null;
             try {
                 br = new BufferedReader(new FileReader("Data.txt"));
                 String line;
-                int i=0;
-                while ((line = br.readLine())!=null){
+                int i = 0;
+                while ((line = br.readLine()) != null) {
                     data[i].setText(line);
                     i++;
                 }
@@ -405,7 +408,7 @@ public class SV_Generator {
                 }
             }
         }
-}
+    }
 
 
 

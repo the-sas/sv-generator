@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main.fxml"));
         primaryStage.setTitle("SV_Generator_by_SorokinAS");
-        primaryStage.setScene(new Scene(fxmlLoader.load(), 795,390));
+        primaryStage.setScene(new Scene(fxmlLoader. load(), 795,390));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
