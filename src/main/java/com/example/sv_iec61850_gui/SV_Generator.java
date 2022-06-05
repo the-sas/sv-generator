@@ -174,82 +174,205 @@ public class SV_Generator {
 
         if (Iag.isSelected()) {
             q[0] = 0;
-        } else if (Iai.isSelected()) {
-            q[0] = 1;
-        } else if (Iau.isSelected()) {
-            q[0] = 10;
-        } else if (Iaq.isSelected()) {
-            q[0] = 11;
+            Iai.setSelected(false);
+            Iau.setSelected(false);
+            Iaq.setSelected(false);
         }
+        if (Iai.isSelected()){
+            q[0] = 1;
+            Iag.setSelected(false);
+            Iau.setSelected(false);
+            Iaq.setSelected(false);
+        }
+
+        if (Iau.isSelected()) {
+            q[0] = 10;
+            Iag.setSelected(false);
+            Iai.setSelected(false);
+            Iaq.setSelected(false);
+        }
+
+        if (Iaq.isSelected()) {
+            q[0] = 11;
+            Iag.setSelected(false);
+            Iai.setSelected(false);
+            Iau.setSelected(false);
+        }
+
 
         if (Ibg.isSelected()) {
             q[1] = 0;
-        } else if (Ibi.isSelected()) {
+            Ibi.setSelected(false);
+            Ibu.setSelected(false);
+            Ibq.setSelected(false);
+        }
+        if (Ibi.isSelected()) {
             q[1] = 1;
-        } else if (Ibu.isSelected()) {
+            Ibg.setSelected(false);
+            Ibu.setSelected(false);
+            Ibq.setSelected(false);
+        }
+        if (Ibu.isSelected()) {
             q[1] = 10;
-        } else if (Ibq.isSelected()) {
+            Ibg.setSelected(false);
+            Ibi.setSelected(false);
+            Ibq.setSelected(false);
+        }
+        if (Ibq.isSelected()) {
             q[1] = 11;
+            Ibg.setSelected(false);
+            Ibi.setSelected(false);
+            Ibu.setSelected(false);
         }
 
         if (Icg.isSelected()) {
             q[2] = 0;
-        } else if (Ici.isSelected()) {
+            Ici.setSelected(false);
+            Icu.setSelected(false);
+            Icq.setSelected(false);
+        }
+        if (Ici.isSelected()) {
             q[2] = 1;
-        } else if (Icu.isSelected()) {
+            Icg.setSelected(false);
+            Icu.setSelected(false);
+            Icq.setSelected(false);
+        }
+        if (Icu.isSelected()) {
             q[2] = 10;
-        } else if (Icq.isSelected()) {
+            Icg.setSelected(false);
+            Ici.setSelected(false);
+            Icq.setSelected(false);
+        }
+        if (Icq.isSelected()) {
             q[2] = 11;
+            Icg.setSelected(false);
+            Ici.setSelected(false);
+            Icu.setSelected(false);
         }
 
         if (Ing.isSelected()) {
             q[3] = 0;
-        } else if (Ini.isSelected()) {
+            Ini.setSelected(false);
+            Inu.setSelected(false);
+            Inq.setSelected(false);
+        }
+        if (Ini.isSelected()) {
             q[3] = 1;
-        } else if (Inu.isSelected()) {
+            Ing.setSelected(false);
+            Inu.setSelected(false);
+            Inq.setSelected(false);
+        }
+        if (Inu.isSelected()) {
             q[3] = 10;
-        } else if (Inq.isSelected()) {
+            Ing.setSelected(false);
+            Ini.setSelected(false);
+            Inq.setSelected(false);
+        }
+        if (Inq.isSelected()) {
             q[3] = 11;
+            Ing.setSelected(false);
+            Ini.setSelected(false);
+            Inu.setSelected(false);
         }
 
         if (Uag.isSelected()) {
             q[4] = 0;
-        } else if (Uai.isSelected()) {
+            Uai.setSelected(false);
+            Uau.setSelected(false);
+            Uaq.setSelected(false);
+        }
+        if (Uai.isSelected()) {
             q[4] = 1;
-        } else if (Uau.isSelected()) {
+            Uag.setSelected(false);
+            Uau.setSelected(false);
+            Uaq.setSelected(false);
+        }
+        if (Uau.isSelected()) {
             q[4] = 10;
-        } else if (Uaq.isSelected()) {
+            Uag.setSelected(false);
+            Uai.setSelected(false);
+            Uaq.setSelected(false);
+        }
+        if (Uaq.isSelected()) {
             q[4] = 11;
+            Uau.setSelected(false);
+            Uai.setSelected(false);
+            Uaq.setSelected(false);
         }
 
         if (Ubg.isSelected()) {
             q[5] = 0;
-        } else if (Ubi.isSelected()) {
+            Ubi.setSelected(false);
+            Ubu.setSelected(false);
+            Ubq.setSelected(false);
+        }
+        if (Ubi.isSelected()) {
             q[5] = 1;
-        } else if (Ubu.isSelected()) {
+            Ubg.setSelected(false);
+            Ubu.setSelected(false);
+            Ubq.setSelected(false);
+        }
+        if (Ubu.isSelected()) {
             q[5] = 10;
-        } else if (Ubq.isSelected()) {
+            Ubi.setSelected(false);
+            Ubg.setSelected(false);
+            Ubq.setSelected(false);
+        }
+        if (Ubq.isSelected()) {
             q[5] = 11;
+            Ubi.setSelected(false);
+            Ubu.setSelected(false);
+            Ubg.setSelected(false);
         }
 
         if (Ucg.isSelected()) {
             q[6] = 0;
-        } else if (Uci.isSelected()) {
+            Uci.setSelected(false);
+            Ucu.setSelected(false);
+            Ucq.setSelected(false);
+        }
+        if (Uci.isSelected()) {
             q[6] = 1;
-        } else if (Ucu.isSelected()) {
+            Ucg.setSelected(false);
+            Ucu.setSelected(false);
+            Ucq.setSelected(false);
+        }
+        if (Ucu.isSelected()) {
             q[6] = 10;
-        } else if (Ucq.isSelected()) {
+            Uci.setSelected(false);
+            Ucg.setSelected(false);
+            Ucq.setSelected(false);
+        }
+        if (Ucq.isSelected()) {
             q[6] = 11;
+            Uci.setSelected(false);
+            Ucu.setSelected(false);
+            Ucg.setSelected(false);
         }
 
         if (Ung.isSelected()) {
             q[7] = 0;
-        } else if (Uni.isSelected()) {
+            Uni.setSelected(false);
+            Unu.setSelected(false);
+            Unq.setSelected(false);
+        }
+        if (Uni.isSelected()) {
             q[7] = 1;
-        } else if (Unu.isSelected()) {
+            Ung.setSelected(false);
+            Unu.setSelected(false);
+            Unq.setSelected(false);
+        }
+        if (Unu.isSelected()) {
             q[7] = 10;
-        } else if (Unq.isSelected()) {
+            Uni.setSelected(false);
+            Ung.setSelected(false);
+            Unq.setSelected(false);
+        }
+        if (Unq.isSelected()) {
             q[7] = 11;
+            Uni.setSelected(false);
+            Unu.setSelected(false);
+            Ung.setSelected(false);
         }
         return q;
     }
