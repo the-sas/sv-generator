@@ -3,23 +3,23 @@ package PacketForm;
 import java.nio.charset.StandardCharsets;
 
 public class ASDU {
+
     private static byte SequenceASDU_tag = 0x30;
     private static byte SequenceASDU_lgt = 0x5b;
     private static byte svID_tag = (byte) 0x80;
     private static byte svID_lgt = 0x0A;
+    private String svID;
     private static byte smpCnt_tag = (byte) 0x82;
     private static byte smpCnt_lgt = 0x02;
+    private short smpCnt;
     private static byte confRev_tag = (byte) 0x83;
     private static byte confRev_lgt = 0x04;
-    private static int confRev = 0;    //also can be set externaly
+    private static int confRev = 1;
     private static byte smpSynch_tag = (byte) 0x85;
     private static byte smpSynch_lgt = 0x01;
-    private static byte smpSynch = 0x01; //also can be set externaly
+    private static byte smpSynch = 0x01;
     private static byte SequenceofData_tag = (byte) 0x87;
     private static byte SequnceofData_lgt = 0x40;
-
-    private String svID;
-    private short smpCnt;
 
     private int Ia_Amp_instMag;
     private int Ia_Amp_q;
@@ -192,5 +192,4 @@ public class ASDU {
         res[0] = (byte) ((val >> 24) & 0xff);
         return res;
     }
-
 }

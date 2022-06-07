@@ -33,43 +33,43 @@ public class Send {
         PcapHandle sendHandle = nif.openLive(SNAPLEN, PromiscuousMode.PROMISCUOUS, READ_TIMEOUT);
         for (int i = 0; i < num; i++) {
             long t = getTimeInSeconds(time);
-            double wt = 2*Math.PI*50*t/1000;
-            APDU apdu = new APDU(appID);
-            ASDU asdu = new ASDU(svID, (short) count, new int[]{
-                    (int) (meas[0]*1000*Math.sin(wt+Math.toRadians(meas[1]))), qual[0],
-                    (int) (meas[2]*1000*Math.sin(wt+Math.toRadians(meas[3]))), qual[1],
-                    (int) (meas[4]*1000*Math.sin(wt+Math.toRadians(meas[5]))), qual[2],
-                    (int) (meas[0]*1000*Math.sin(wt+Math.toRadians(meas[1])))+
-                            (int) (meas[2]*1000*Math.sin(wt+Math.toRadians(meas[3])))+
-                            (int) (meas[4]*1000*Math.sin(wt+Math.toRadians(meas[5]))), qual[3],
+            double wt = 2 * Math.PI * 50 * t / 1000;
+                APDU apdu = new APDU(appID);
+                ASDU asdu = new ASDU(svID, (short) count, new int[]{
+                        (int) (meas[0] * 1000 * Math.sin(wt + Math.toRadians(meas[1]))), qual[0],
+                        (int) (meas[2] * 1000 * Math.sin(wt + Math.toRadians(meas[3]))), qual[1],
+                        (int) (meas[4] * 1000 * Math.sin(wt + Math.toRadians(meas[5]))), qual[2],
+                        (int) (meas[0] * 1000 * Math.sin(wt + Math.toRadians(meas[1]))) +
+                        (int) (meas[2] * 1000 * Math.sin(wt + Math.toRadians(meas[3]))) +
+                        (int) (meas[4] * 1000 * Math.sin(wt + Math.toRadians(meas[5]))), qual[3],
 
-                    (int) (meas[6]*1000*Math.sin(wt+Math.toRadians(meas[7]))), qual[4],
-                    (int) (meas[8]*1000*Math.sin(wt+Math.toRadians(meas[9]))), qual[5],
-                    (int) (meas[10]*1000*Math.sin(wt+Math.toRadians(meas[11]))), qual[6],
-                    (int) (meas[6]*1000*Math.sin(wt+Math.toRadians(meas[7])))+
-                            (int) (meas[8]*1000*Math.sin(wt+Math.toRadians(meas[9])))+
-                            (int) (meas[10]*1000*Math.sin(wt+Math.toRadians(meas[11]))), qual[7]});
+                        (int) (meas[6] * 1000 * Math.sin(wt + Math.toRadians(meas[7]))), qual[4],
+                        (int) (meas[8] * 1000 * Math.sin(wt + Math.toRadians(meas[9]))), qual[5],
+                        (int) (meas[10] * 1000 * Math.sin(wt + Math.toRadians(meas[11]))), qual[6],
+                        (int) (meas[6] * 1000 * Math.sin(wt + Math.toRadians(meas[7]))) +
+                        (int) (meas[8] * 1000 * Math.sin(wt + Math.toRadians(meas[9]))) +
+                        (int) (meas[10] * 1000 * Math.sin(wt + Math.toRadians(meas[11]))), qual[7]});
 
-            byte[] payload = new byte[apdu.convertToBytes().length+asdu.convertToBytes().length];
-            System.arraycopy(apdu.convertToBytes(),0,payload, 0, apdu.convertToBytes().length);
-            System.arraycopy(asdu.convertToBytes(),0,payload,apdu.convertToBytes().length,asdu.convertToBytes().length);
+                byte[] payload = new byte[apdu.convertToBytes().length + asdu.convertToBytes().length];
+                System.arraycopy(apdu.convertToBytes(), 0, payload, 0, apdu.convertToBytes().length);
+                System.arraycopy(asdu.convertToBytes(), 0, payload, apdu.convertToBytes().length, asdu.convertToBytes().length);
 
-            UnknownPacket.Builder svBuilder = new UnknownPacket.Builder();
-            svBuilder.rawData(payload);
+                UnknownPacket.Builder svBuilder = new UnknownPacket.Builder();
+                svBuilder.rawData(payload);
 
-            EthernetPacket.Builder etherBuilder = new EthernetPacket.Builder();
-            etherBuilder
-                    .dstAddr(MacAddress.getByName(dMAC))
-                    .srcAddr(MacAddress.getByName(srcMAC))
-                    .type(new EtherType((short) 0x88ba, "IEC61850 by SorokinAS"))
-                    .payloadBuilder(svBuilder)
-                    .paddingAtBuild(true);
+                EthernetPacket.Builder etherBuilder = new EthernetPacket.Builder();
+                etherBuilder
+                        .dstAddr(MacAddress.getByName(dMAC))
+                        .srcAddr(MacAddress.getByName(srcMAC))
+                        .type(new EtherType((short) 0x88ba, "Sampled Values"))
+                        .payloadBuilder(svBuilder)
+                        .paddingAtBuild(true);
 
-            Packet p = etherBuilder.build();
-            sendHandle.sendPacket(p);
+                Packet p = etherBuilder.build();
+                sendHandle.sendPacket(p);
 
-            count +=1;
-            Thread.sleep(250);
+                count += 1;
+                Thread.sleep((long) 0.25);
         }
     }
     public static int getTimeInSeconds(long time){

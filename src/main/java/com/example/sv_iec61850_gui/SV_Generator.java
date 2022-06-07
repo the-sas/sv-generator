@@ -133,11 +133,14 @@ public class SV_Generator {
             pasteData(data);
         });
         GenButt.setOnAction(event -> {
+            //сохранение введенных данных
             saveData();
+            //проверка данных на валидность
             checkValidity(alert);
             qual = change();
             meas = getMeas();
             appID = getAppID();
+            //запуск отправки пакетов
             try {
                 Send packet = new Send(DstMACfield.getText(),
                         SrcMACfield.getText(),
@@ -377,12 +380,13 @@ public class SV_Generator {
         return q;
     }
 
+
     public void checkValidity(Alert alert) {
-        if ((SrcMACfield.getText().length() != 17)||(!SrcMACfield.getText().matches("([0-9A-F]{2}:){5}[0-9A-F]{2}"))) {
+        if ((SrcMACfield.getText().length() != 17)||(!SrcMACfield.getText().matches("([0-9A-F]{2}-){5}[0-9A-F]{2}"))) {
             alert.setContentText("Invalid source MAC");
             alert.showAndWait();
         }
-        if ((DstMACfield.getText().length() != 17)||(!DstMACfield.getText().matches("01:0C:CD:04:0[01]:[0-9A-F]{2}"))) {
+        if ((DstMACfield.getText().length() != 17)||(!DstMACfield.getText().matches("01-0C-CD-04-0[01]-[0-9A-F]{2}"))) {
             alert.setContentText("Invalid destination MAC");
             alert.showAndWait();
         }
@@ -457,7 +461,7 @@ public class SV_Generator {
         }
 
         if (!phaseUc.getText().matches("-?[0-9]{1,}")) {
-            alert.setContentText("Invalid value of phase Ua");
+            alert.setContentText("Invalid value of phase Uc");
             alert.showAndWait();
         }
         }

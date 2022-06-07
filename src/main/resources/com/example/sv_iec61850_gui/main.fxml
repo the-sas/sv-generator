@@ -13,8 +13,8 @@
    <children>
       <AnchorPane layoutX="10.0" layoutY="22.0" prefHeight="347.0" prefWidth="206.0" style="-fx-background-color: #6e6e6e;">
          <children>
-            <TextField fx:id="SrcMACfield" layoutX="63.0" layoutY="30.0" prefHeight="25.0" prefWidth="123.0" promptText="XX:XX:XX:XX:XX:XX" />
-            <TextField fx:id="DstMACfield" layoutX="63.0" layoutY="65.0" prefHeight="25.0" prefWidth="123.0" promptText="XX:XX:XX:XX:XX:XX" />
+            <TextField fx:id="SrcMACfield" layoutX="63.0" layoutY="30.0" prefHeight="25.0" prefWidth="123.0" promptText="XX-XX-XX-XX-XX-XX" />
+            <TextField fx:id="DstMACfield" layoutX="63.0" layoutY="65.0" prefHeight="25.0" prefWidth="123.0" promptText="XX-XX-XX-XX-XX-XX" />
             <TextField fx:id="svIDfield" layoutX="63.0" layoutY="98.0" prefHeight="25.0" prefWidth="123.0" promptText="XXXXXXXXXX" />
             <TextField fx:id="appIDfield" layoutX="63.0" layoutY="131.0" prefHeight="25.0" prefWidth="123.0" promptText="4000-7FFF" />
             <TextField fx:id="svNumfield" layoutX="63.0" layoutY="164.0" prefHeight="25.0" prefWidth="123.0" promptText="0-oo" />
